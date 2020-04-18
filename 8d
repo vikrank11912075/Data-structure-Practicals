@@ -1,0 +1,32 @@
+/*Selection sort*/
+
+#include<stdio.h>
+int main()
+{
+    int arr[100],temp,num,minIndex;
+    printf("Enter the number of elements:");
+    scanf("%d",&num);
+    for(int i=0;i<num;i++)
+    {
+        printf("\nEnter the element:");
+        scanf("%d",&arr[i]);
+    }
+    for(int i=0;i<num-1;i++)
+    {
+        minIndex=i;
+        for(int j=i+1;j<num;j++)
+        {
+            if(arr[minIndex]>arr[j])
+                minIndex=j;
+        }
+        if(i!=minIndex)
+        {
+            temp=arr[i];
+            arr[i]=arr[minIndex];
+            arr[minIndex]=temp;
+        }
+    }
+    printf("\nElements in sorted order are:");
+    for(int i=0;i<num;i++)
+        printf("%d ",arr[i]);
+}

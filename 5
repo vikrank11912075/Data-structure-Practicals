@@ -1,0 +1,70 @@
+/*Binary search tree*/
+
+#include<stdio.h>
+#include<stdlib.h>
+struct node
+{
+    struct node *lchild;
+    char info;
+    struct node *rchild;
+};
+struct node *getnode(char x);//To create a node
+void preorder(struct node *p);//Traverse the list in preorder
+void inorder(struct node *p);//Traverse the list in inorder
+void postorder(struct node *p);//Traverse the list in postorder
+
+int main()
+{
+    struct node *root=NULL;
+    root=getnode('P');
+    root->lchild=getnode('Q');
+    root->rchild=getnode('R');
+    root->lchild->lchild=getnode('A');
+    root->lchild->rchild=getnode('B');
+    root->rchild->lchild=getnode('X');
+
+    printf("PREORDER: ");
+    preorder(root);
+    printf("\n\n");
+
+    printf("INORDER: ");
+    inorder(root);
+    printf("\n\n");
+
+    printf("POSTORDER: ");
+    postorder(root);
+    printf("\n\n");
+
+}
+struct node *getnode(char x)
+{
+  struct node *p=(struct node*)malloc(sizeof(struct node));
+  p->info=x;
+  p->lchild=p->rchild=NULL;
+}
+void preorder(struct node *p)
+{
+    if(p==NULL)
+        return;
+    printf("%c ",p->info);
+    preorder(p->lchild);
+    preorder(p->rchild);
+}
+void inorder(struct node *p)
+{
+    if(p==NULL)
+        return;
+    inorder(p->lchild);
+    printf("%c ",p->info);
+    inorder(p->rchild);
+}
+void postorder(struct node *p)
+{
+    if(p==NULL)
+        return;
+
+    postorder(p->lchild);
+    postorder(p->rchild);
+    printf("%c ",p->info);
+}
+

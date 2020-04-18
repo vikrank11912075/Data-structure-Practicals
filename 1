@@ -1,0 +1,77 @@
+/*Singly linked list*/
+
+#include<stdio.h>
+#include<stdlib.h>
+struct node
+{
+    int info;
+    struct node *link;
+};
+struct node *createList(struct node *start);//Function to create linked list
+struct node *deleteNode(struct node *start,int data);//Function to delete given node in the list
+void display(struct node *start);//Function to display the list
+int main()
+{
+    struct node *start=NULL;
+    int data;
+    start=createList(start);
+    printf("\nList is:");
+    display(start);
+
+    printf("\nEnter the number to be deleted:");
+    scanf("%d",&data);
+    start=deleteNode(start,data);
+
+    printf("\nList is:");
+    display(start);
+}
+struct node *createList(struct node *start)
+{
+    int data,num_of_nodes;
+    printf("Enter the number of nodes to be entered:");
+    scanf("%d",&num_of_nodes);
+    printf("Enter the number:");
+    scanf("%d",&data);
+    struct node *temp=(struct node*)malloc(sizeof(struct node));
+    temp->info=data;
+    temp->link=NULL;
+    start=temp;
+    for(int i=2;i<=num_of_nodes;i++)
+    {
+        printf("Enter  the number:");
+        scanf("%d",&data);
+        struct node *p=start,*temp=(struct node*)malloc(sizeof(struct node));
+        temp->info=data;
+        temp->link=NULL;
+        while(p->link!=NULL)
+            p=p->link;
+        p->link=temp;
+    }
+    return start;
+}
+struct node *deleteNode(struct node *start,int data)
+{
+    struct node *temp,*p=start;
+    if(start->info==data)
+    {
+        temp=start;
+        start=start->link;
+        free(temp);
+        return start;
+    }
+    while(p->link->info!=data)
+        p=p->link;
+    temp=p->link;
+    p->link=temp->link;
+    free(temp);
+    return start;
+}
+void display(struct node *start)
+{
+    struct node *p=start;
+    while(p!=NULL)
+    {
+        printf("%d ",p->info);
+        p=p->link;
+    }
+}

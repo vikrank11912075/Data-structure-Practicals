@@ -1,0 +1,50 @@
+/*Count number of leaf and non leaf node*/
+
+#include<stdio.h>
+#include<stdlib.h>
+struct node
+{
+    struct node *lchild;
+    char info;
+    struct node *rchild;
+};
+struct node *getnode(char x);//To create node
+int numberOfLeafNodes(struct node *p);//Returns number of leaf nodes in the binary tree
+int numberOfNonLeafNodes(struct node *p);//Returns number of non leaf nodes in the binary tree
+
+int main()
+{
+    struct node *root=NULL;
+    root=getnode('P');
+    root->lchild=getnode('Q');
+    root->rchild=getnode('R');
+    root->lchild->lchild=getnode('A');
+    root->lchild->rchild=getnode('B');
+    root->rchild->lchild=getnode('X');
+
+    printf("Number of leaf nodes in the tree are: %d",numberOfLeafNodes(root));
+    printf("\nNumber of non leaf nodes in the tree are: %d",numberOfNonLeafNodes(root));
+
+}
+struct node *getnode(char x)
+{
+  struct node *p=(struct node*)malloc(sizeof(struct node));
+  p->info=x;
+  p->lchild=p->rchild=NULL;
+}
+int numberOfLeafNodes(struct node *p)
+{
+    if(p==NULL)
+        return 0;
+    if(p->lchild==NULL && p->rchild==NULL)
+        return 1;
+    else
+    return numberOfLeafNodes(p->lchild)+numberOfLeafNodes(p->rchild);
+
+}
+int numberOfNonLeafNodes(struct node *p)
+{
+    if(p==NULL || (p->lchild==NULL && p->rchild==NULL))
+        return 0;
+    return 1+numberOfNonLeafNodes(p->lchild)+numberOfNonLeafNodes(p->rchild);
+}

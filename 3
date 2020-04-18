@@ -1,0 +1,77 @@
+/*Program to convert infix expression to postfix expression*/
+
+#include<stdio.h>
+void infixToPostfix(char str[]);
+int precedence(char x);//To calculate the precedence of the operators
+
+char stack[50];
+int top=-1;
+void push(char x);
+char pop();
+
+int main()
+{
+    char str[50];
+    printf("Enter the infix expression:");
+    gets(str);
+    infixToPostfix(str);
+}
+void infixToPostfix(char str[])
+{
+    char str1[50];
+    int k=0;
+    for(int i=0;str[i]!='\0';i++)
+    {
+        if(str[i]>='a' && str[i]<='z')
+            str1[k++]=str[i];
+        if(str[i]=='(')
+            push(str[i]);
+        if(str[i]=='+' || str[i]=='-' || str[i]=='*' || str[i]=='/' || str[i]=='^')
+        {
+            if(top!=-1)
+            {
+              while(precedence(str[i])<=precedence(stack[top]))
+               str1[k++]=pop();
+            }
+            push(str[i]);
+        }
+        if(str[i]==')')
+        {
+            while(stack[top]!='(')
+                str1[k++]=pop();
+            pop();
+        }
+    }
+    while(top!=-1)
+        str1[k++]=pop();
+  printf("\nPostfix expression is: %s",str1);
+}
+int precedence(char x)
+{
+    switch(x)
+    {
+    case '+':
+    case '-':
+        return 1;
+    case '*':
+    case '/':
+    case '%':
+        return 2;
+    case '^':
+        return 3;
+    case '(':
+        return 0;
+    }
+}
+void push(char x)
+{
+    top=top+1;
+    stack[top]=x;
+}
+char pop()
+{
+    char x;
+    x=stack[top];
+    top=top-1;
+    return x;
+}
